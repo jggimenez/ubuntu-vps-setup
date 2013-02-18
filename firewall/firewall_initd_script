@@ -1,0 +1,35 @@
+#!/bin/sh -e
+### BEGIN INIT INFO
+# Provides:          firewall
+# Required-Start:
+# Required-Stop:
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Firewall Vlad Ghinea.
+### END INIT INFO
+
+case "$1" in
+start)
+	sudo INSTALL_DIR/firewall_start.sh
+	exit 0
+	;;
+
+stop)
+	sudo INSTALL_DIR/firewall_stop.sh
+	exit 0
+	;;
+
+restart)
+	echo "Stopping Firewall"
+	sudo INSTALL_DIR/firewall_stop.sh
+	sudo INSTALL_DIR/firewall_start.sh
+	exit 0
+	;;
+
+*)
+	echo "Usage: /etc/init.d/firewall.init {start|stop|restart}"
+	exit 1
+	;;
+esac
+
+exit 0
