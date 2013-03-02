@@ -4,6 +4,10 @@
 # TEXT: Install NGINX (from source)
 #==============================================================================
 
+#TODO
+# 1. Change admin group/ or check for existance...
+# 2. Check NGINX install packages one by one...
+
 installNGINX() {
     NGINX_V=1.2.6
     TEMPLATE=$SOURCE_DIR/nginx

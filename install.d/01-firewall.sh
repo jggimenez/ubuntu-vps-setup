@@ -19,8 +19,19 @@ installFirewall() {
     _title "Installing custom firewall script"
 
     INSTALL_DIR=/srv/scripts/firewall
-    #PUBLIC_IP=$(ifconfig eth0 | awk -F: '/inet addr:/ {print $2}' | awk '{ print $1 }')
-    PUBLIC_IP=$(ifconfig venet0:0 | awk -F: '/inet addr:/ {print $2}' | awk '{ print $1 }')
+
+    echo -e "\t0) eth0"
+    echo -e "\t1) venet0:0"
+    echo
+    echo -n "Choice [eth0]: "   
+    read ifOption
+    
+    # ifconfig -s | awk '{ print $1 }' | grep -vi iface | grep -vi lo
+    case $ifOption
+        1) PUBLIC_IP=$(ifconfig venet0:0 | awk -F: '/inet addr:/ {print $2}' | awk '{ print $1 }')
+        *) PUBLIC_IP=$(ifconfig eth0 | awk -F: '/inet addr:/ {print $2}' | awk '{ print $1 }')
+    esac    
+    
 
     ESCAPED_INSTALL_DIR=$(echo $INSTALL_DIR | sed -e 's/\\/\\\\/g' -e 's/\//\\\//g' -e 's/&/\\\&/g')
     ESCAPED_PUBLIC_IP=$(echo $PUBLIC_IP | sed -e 's/\./\\\./g')

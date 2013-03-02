@@ -4,6 +4,10 @@
 # TEXT: Install PHP (source) with PHP-FPM
 #==============================================================================
 
+#TODO
+# 1. Change admin group/ or check for existance...
+# 2. Check NGINX install packages one by one...
+
 installPHP() {
     PHP_V=5.4.11
     MIRROR=us.php.net
@@ -21,9 +25,9 @@ installPHP() {
     apt-get -y install make bison flex gcc patch autoconf autoconf2.13 \
         locate libxml2-dev libbz2-dev libpcre3-dev libssl-dev zlib1g-dev \
         libmcrypt-dev libmhash-dev libmhash2 libcurl4-openssl-dev libpq-dev \
-        libpq5 libtool libevent-dev libmysqlclient-dev\
-        libjpeg62-dev libpng3-dev libfreetype6-dev libt1-dev libxslt1-dev \
-        libxpm-dev
+        libpq5 libtool libevent-dev libmysqlclient-dev \
+        libjpeg-dev libpng3-dev libfreetype6-dev libt1-dev libxslt1-dev
+#        libxpm-dev libgd2-xpm-dev
 
     pushd .
     cd /usr/local/src/
@@ -55,6 +59,7 @@ installPHP() {
     ./buildconf --force
 #        --disable-pdo
 #        --with-pgsql
+#        --with-xpm-dir \
     ./configure --prefix=/opt/php5 \
         --with-config-file-path=/opt/php5/etc \
         --with-config-file-scan-dir=/opt/php5/etc/conf.d \
@@ -73,7 +78,6 @@ installPHP() {
         --with-mysql \
         --with-openssl \
         --with-xmlrpc \
-        --with-xpm-dir \
         --with-xsl \
         --with-gettext \
         --with-mcrypt \
@@ -105,7 +109,7 @@ installPHP() {
         --disable-debug \
         --disable-rpath
     _failcheck "PHP configure failed. Check requirements."
-    make            ;_failcheck "PHP mke failed."
+    make            ;_failcheck "PHP make failed."
 #    make test       ;_failcheck "PHP make test failed."
     make install    ;_failcheck "PHP make install failed."
 
